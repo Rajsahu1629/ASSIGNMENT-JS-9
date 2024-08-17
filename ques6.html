@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container
+        {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+        #container img 
+        {
+            width: 80%;
+        }
+       #container div 
+       {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+       }
+       #container:hover
+       {
+        cursor: pointer;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+       }
+    </style>
+</head>
+<body>
+    <div id ="container"></div>
+    
+    
+</body>
+</html>
+
+
+
+<script>
+
+    let button1 = document.createElement('button');
+    button1.innerText="Get cateogry data";
+    let button2 = document.createElement('button')
+    button2.innerText = "Get engridment data";
+
+    button1.addEventListener('click',getcateogrydata);
+    button2.addEventListener('click',getingredientdata);
+    let res = document.querySelector('body').append(button1,button2);
+
+
+    function getcateogrydata()
+    {
+        let fetchdata = fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood");
+        fetchdata.then((res)=>
+        {
+            return res.json();
+        }).then((ele)=>
+        {
+            displayondashboard(ele)
+        })
+        
+        
+    }
+
+    function getingredientdata()
+    {
+        let fetchdata = fetch("https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast");
+        fetchdata.then((res)=>
+        {
+            return res.json();
+        }).then((ans)=>
+        {
+           displayondashboard(ans);
+        })
+
+    }
+
+
+
+function displayondashboard(data)
+{
+    
+
+let dis = document.querySelector('div');
+dis.className = "childdiv";
+data.meals.map((res)=>
+{
+    let card = document.createElement('div');
+    card.innerHTML = `
+    <img src ="${res.strMealThumb}"></img>
+    <h1>${res.strMeal}</h1>
+    <p>${res.idMeal}</p>
+    
+    `
+
+    dis.appendChild(card);
+    document.querySelector('#container').append(card)
+
+})
+
+
+
+}
+
+//   let res=fetch("https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood");
+//   res.then((ress)=>
+//   {
+ 
+//     return ress.json();
+
+//   }).then((ans)=>
+//   {
+
+// //    console.log(ans)
+// //    a=ans.meals
+// //    console.log(a);
+//    ans.meals.map((res)=>
+//    {
+//     console.log(res.idMeal)
+//    })
+
+//   })
+  
+
+    
+function exampleScope() {
+        if (true) {
+            var a = 5;
+        }
+        console.log(a);
+    }
+    exampleScope();
+
+
+</script>
